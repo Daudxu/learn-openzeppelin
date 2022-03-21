@@ -1,14 +1,15 @@
-// SPDX-License-Identifier: GPL-3.0
-
-pragma solidity ^0.8.0;
-
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol";
-
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.9;
-// import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-contract MyToken is ERC20 {
-    constructor(string memory name, string memory symbol) ERC20(name, symbol) {
-        _mint(msg.sender, 1000000 * 10**uint(decimals()));
+pragma solidity ^0.8.4;
+
+import "@openzeppelin/contracts@4.5.0/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts@4.5.0/access/Ownable.sol";
+
+contract MyToken is ERC20, Ownable {
+    constructor() ERC20("MyToken", "MTK") {
+        _mint(msg.sender, 1000 * 10 ** decimals());
+    }
+
+    function mint(address to, uint256 amount) public onlyOwner {
+        _mint(to, amount);
     }
 }
